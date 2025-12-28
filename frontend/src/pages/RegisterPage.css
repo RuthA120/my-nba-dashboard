@@ -1,0 +1,267 @@
+.page {
+  display: flex;
+  flex-direction: row; 
+  width: 100vw;
+  min-height: 100vh;
+  margin: 0;
+  height: 500px;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.box {
+  flex: 1 1 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  min-height: 100vh;
+  background-color: #354CA1; 
+  padding: 0; 
+}
+
+.side-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  display: block;
+}
+
+.form-container {
+  flex: 1 1 50%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  min-width: 450px; 
+}
+
+.form-box {
+  width: 450px;
+  background-color: #354CA1;
+  height: 390px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 55px;
+  margin-top: 50px;
+  transition: all 0.3s ease-in-out;
+}
+
+.register-avatar {
+  position: relative;
+  top: -50px; 
+  width: 100px; 
+  height: 100px;
+  object-fit: cover;
+}
+
+
+.header {
+  font-size: 2em;
+  letter-spacing: 3px;
+  font-weight: bold;
+  margin-top: -20px;
+  margin-bottom: -5px;
+  top: -20px;
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.register-line{
+  width: 70%;
+  top: -20px;
+  position: relative;
+  height: 2px;
+  background-color: white;
+}
+
+.email-header,
+.password-header {
+  color: white;
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-right: 225px;
+  position: relative;
+  top: -15px;
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+
+.email-header{
+  margin-right: 260px;
+}
+
+.email-input,
+.password-input {
+  background-color: white;
+  width: 100%;
+  height: 40px;
+  color: black;
+  position: relative;
+  top: -15px;
+  border-radius: 50px;
+  border: none;
+  margin-left: 5px;
+  font-size: 1em;
+  margin-bottom: 15px;
+}
+
+.register-button {
+  background-color: #FF5757;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 40px;
+  position: relative;
+  top: -5px;
+  width: 100%;
+  max-width: 200px;
+  cursor: pointer;
+  font-size: 1.2em;
+  font-weight: bold;
+  align-self: center;
+  margin-left: 85px;
+  margin-top: 10px;
+}
+
+.login-link {
+  color: white;
+  position: relative;
+  top: -5px;
+  text-decoration: underline;
+  margin-top: 10px;
+  text-align: center;
+  display: block;
+  cursor: pointer;
+}
+
+.confirm-header{
+  color: black;
+  font-size: 2em;
+  font-weight: bold;
+  position: relative;
+  top: -20px;
+  text-align: center;
+}
+
+.confirm-message{
+  color: black;
+  position: relative;
+  top: -20px;
+  font-size: 1.2em;
+  text-align: center;
+}
+
+.basketball-design{
+  width: 100px;
+  height: 100px;
+}
+
+.login-direct{
+  position: relative;
+  top: -30px;
+}
+
+
+.modal-content{
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+  max-width: 400px;
+  height: 470px;
+}
+
+
+
+.login-direct{
+  margin-top: 1.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.modal-overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+
+@media (max-width: 768px) {
+  .page {
+    flex-direction: column;
+    background-color: #354CA1;
+  }
+
+  .box {
+    display: none; 
+  }
+
+  .form-container {
+    flex: 1 1 100%;
+    width: 768px;
+    min-height: 100vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #354CA1;
+  }
+
+  .form-box {
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    background-color: #354CA1;
+    border-radius: 0px;
+  }
+
+  .register-avatar {
+    top: 45px;
+    position: relative;
+  }
+  
+  .header {
+    margin-top: 70px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .username-input,
+  .email-input,
+  .password-input {
+    right: 110px;
+    width: 230%;
+    color: black;
+    position: relative;
+  }
+
+  .username-header,
+  .email-header,
+  .password-header {
+    margin-right: 0;
+    text-align: center;
+  }
+
+  .register-button {
+    margin: 20px auto;
+    display: block;
+  }
+
+  .login-link {
+    margin-top: -5px;
+    text-align: center;
+  }
+}
+

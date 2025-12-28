@@ -1,0 +1,177 @@
+.player-profile-picture{
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #C54242;
+    margin-left: 50px;
+    margin-top: 120px;
+}
+
+.player-profile-image{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.player-profile-first-name{
+    margin-left: 330px;
+    margin-top: -245px;
+    font-size: 2.8rem;
+    letter-spacing: 2px;
+    color: #354CA1;
+    text-transform: uppercase;
+}
+
+.player-profile-last-name{
+    margin-left: 328px;
+    margin-top: -30px;
+    letter-spacing: 2px;
+    font-size: 2.8rem;
+    text-transform: uppercase;
+    color: #354CA1;
+}
+
+.player-profile-team{
+    margin-left: 330px;
+    margin-top: -20px;
+    font-size: 1.8rem;
+    color: #7E745F;
+}
+
+.player-profile-status{
+    margin-left: 330px;
+    margin-top: -20px;
+    font-size: 1.4rem;
+    color: #7E745F;
+}
+
+.season-stats-box {
+  background-color: #354CA1;
+  padding: 1.5rem 2rem;
+  margin: 2rem auto;
+  margin-top: 100px;
+  max-width: 1400px;
+  border-radius: 20px;
+}
+
+.season-stats-header {
+  display: flex;
+  color: white;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.season-stats-header h2 {
+  font-size: clamp(1.6rem, 2.5vw, 3.2rem);
+  margin: 0;
+}
+
+.season-select {
+  padding: 0.4rem 0.8rem;
+  font-size: 1rem;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  column-gap: 1rem;
+  row-gap: 2rem;
+  padding-bottom: 20px;
+}
+
+.stat-card {
+  width: 100%;
+  max-width: 180px;  
+}
+
+
+.stat-value {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 700;
+  color: #D9D9D9;
+  text-align: center;
+}
+
+.stat-label {
+  margin-top: 0.3rem;
+  font-size: 2rem;
+  font-weight: 600;
+  color: white;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.search-buttons{
+    position: absolute;
+    right: 90px;
+    top: 120px;
+    display: grid;
+    row-gap: 15px;
+}
+
+.team-search-button{
+    color: white;
+    width: 200px;
+    height: 30px;
+    border-radius: 25px;
+    text-align: center;
+    padding-top: 10px;
+    background-color: #C54242;
+}
+
+.player-search-button{
+    color: white;
+    width: 200px;
+    height: 30px;
+    border-radius: 25px;
+    text-align: center;
+    padding-top: 10px;
+    background-color: #354CA1;
+}
+
+.favorite-status {
+  width: 190px;
+  height: 35px;
+  border-radius: 25px;
+  background-color: rgb(136, 195, 100);
+  margin-left: 325px;
+  margin-top: -10px;
+  margin-bottom: -10px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.favorite-status.favorited {
+  background-color: #d44d4d; 
+}
+
+.favorite-status:hover {
+  opacity: 0.9;
+}
+
+
+.favorite-star{
+  height: 30px;
+  width: 30px;
+  margin-top: 1.5px;
+  margin-left: 5px;
+}
+
+.favorited-text{
+  margin-top: 18px;
+  margin-left: 8px;
+}

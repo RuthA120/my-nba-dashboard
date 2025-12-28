@@ -1,0 +1,43 @@
+body{
+  font-family: 'trebuchet ms', sans-serif;
+  color: white;
+}
+
+.players-box {
+  background-color: #354CA1;
+  min-height: 100vh;
+  position: relative;
+}
+
+.players-tab,
+.teams-tab {
+  height: 50px;
+  width: 320px;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+  font-size: 30px;
+  font-weight: 600;
+
+  position: absolute;
+  top: -50px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.players-tab {
+  background-color: #354CA1;
+  right: 10px;
+  z-index: 20; /* front */
+}
+
+.teams-tab {
+  background-color: #C54242;
+  right: 350px;
+  z-index: 10; /* behind, but clickable */
+}

@@ -1,0 +1,37 @@
+.roty-card{
+    margin-top: 260px;
+    width: 250px;
+    height:440px;
+    color: black;
+    margin-left: 5px;
+    border-radius: 25px;
+    text-align: center;
+}
+
+.roty-grid{
+    display: flex;
+    justify-content: center;
+    column-gap: 100px;
+    margin-top: 140px;
+}
+
+.roty-img{
+    width: 100%;
+    margin-top: -120px;
+}
+
+.roty-first {
+  background: linear-gradient(135deg, #f5c842, #c99700);
+}
+
+.roty-second {
+  background: linear-gradient(135deg, #d9d9d9, #9f9f9f);
+}
+
+.roty-third {
+  background: linear-gradient(135deg, #cd7f32, #8b4513);
+}
+
+.roty-other {
+  background: linear-gradient(135deg, #354ca1, #1e2e6d);
+}

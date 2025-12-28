@@ -1,0 +1,48 @@
+.player-profile-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;     /* centers image + text horizontally */
+  justify-content: flex-start;
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.player-profile-div:hover {
+  transform: translateY(-4px);
+  transition: transform 0.2s ease;
+}
+
+/* Circle */
+.player-image-circle {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #eee;
+  margin-bottom: 1rem;
+}
+
+/* Image inside circle */
+.player-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Name */
+.player-name {
+  font-size: 1.5rem;
+  margin: 0.25rem 0 0.1rem 0;  /* tighter spacing */
+}
+
+/* Team */
+.team-name {
+  font-size: 1.2rem;
+  color: white;
+  margin: 0;
+}

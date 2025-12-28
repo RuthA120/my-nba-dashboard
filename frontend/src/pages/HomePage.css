@@ -1,0 +1,102 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'trebuchet ms', sans-serif;
+}
+
+.small-heading {
+  font-size: 60px; 
+  font-weight: bold;
+  letter-spacing: 3px;
+  margin: 5px 0 0 0;
+  padding: 0;
+}
+
+.large-heading {
+  font-size: 100px; 
+  font-weight: bold;
+  letter-spacing: 5px;
+  margin: 5px 0 0 0;
+  padding: 0;
+}
+
+.font {
+  font-family: 'trebuchet ms', sans-serif;
+  color: white; 
+}
+
+
+.home-box {
+  width: 100vw; 
+  max-width: 100%; 
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  background-color: #354CA1;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+}
+
+#home-register {
+    background-color: #FF5757;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 40px;
+    width: 140px;
+    cursor: pointer;
+    font-size: 25px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+#home-login{
+    background-color: #568259;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 40px;
+    width: 140px;
+    cursor: pointer;
+    font-size: 25px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.button-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 300px; 
+  margin-top: 30px; 
+}
+
+@media (max-width: 768px) {
+
+  .home-box {
+    height: 100vh;
+  }
+  .small-heading {
+    font-size: 40px;
+  }
+  .large-heading {
+    font-size: 60px;
+  }
+  .button-container {
+    flex-direction: row;
+    gap: 20px;
+  }
+  #home-register, #home-login {
+    max-width: 200px;
+    font-size: 20px;
+  }
+}
+
+
+
+
