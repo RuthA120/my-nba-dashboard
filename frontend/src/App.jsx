@@ -7,6 +7,12 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import UserNameCreation from "./pages/UserNameCreation";
+import MyDashboard from './pages/MyDashboard';
+import TeamProfile from './pages/TeamProfile';
+import CreatePost from './pages/CreatePost';
+import PostDetail from "./pages/PostDetail";
+import NBADashboardPage from "./pages/NBADashboardPage";
+import SimilarityEngine from "./pages/SimilarityEngine";
 
 export default function App() {
   return (
@@ -20,6 +26,12 @@ export default function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/username-creation" element={<UserNameCreation />} />
+        <Route path="/my-dashboard" element={<MyDashboard />} />
+        <Route path="/teams-search/:id" element={<TeamProfile />} />
+        <Route path="/create-post" element={<CreatePost />} />
+        <Route path="/posts/:postId" element={<PostDetail />} />
+        <Route path="/nba-dashboard" element={<NBADashboardPage />} />
+        <Route path="/similarity-engine" element={<SimilarityEngine />} />
       </Routes>
     </BrowserRouter>
   );

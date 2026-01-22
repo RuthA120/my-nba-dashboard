@@ -1,0 +1,199 @@
+.dashboard-div{
+  display: flex;
+}
+
+.profile-dashboard-div{
+  width: 500px;
+}
+
+.profile-avatar{
+    width: 120px;
+    height: 120px;
+    position: absolute;
+    left: 20px;
+    top: 100px;
+}
+
+.avatar-username{
+    color: black;
+    font-size: 40px;
+    margin-top: 118px;
+    margin-left: 160px;
+}
+
+.follow-button{
+  width: 90px;
+  font-family: 'trebuchet ms', sans-serif;
+  font-size: 15px;
+  height: 30px;
+  top: -25px;
+  margin-left: 98px;
+  background-color: #C54242;
+  border-color: transparent;
+  color: white;
+  font-weight: 1000;
+  cursor: pointer;
+}
+
+.request-button{
+  width: 120px;
+  font-family: 'trebuchet ms', sans-serif;
+  font-size: 15px;
+  height: 30px;
+  top: -25px;
+  margin-left: 18px;
+  background-color: #354ca1;
+  border-color: transparent;
+  color: white;
+  font-weight: 1000;
+  cursor: pointer;
+}
+
+.favorite-players-heading{
+    color: black;
+    margin-top: 85px;
+    margin-left: 65px;
+    font-size: 23px;
+}
+
+.favorite-teams-heading{
+    color: black;
+    margin-left: 65px;
+    margin-top: 35px;
+    font-size: 23px;
+}
+
+.groups-heading{
+    color: black;
+    margin-left: 100px;
+    margin-top: 35px;
+    font-size: 23px;
+}
+
+.groups-div{
+    max-width: 300px;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.favorite-players-div{
+    max-width: 300px;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.favorites-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.favorite-circle {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background-color: #C54242;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.favorite-circle:hover {
+  transform: scale(1.08);
+}
+
+.favorite-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.team-favorites-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.team-favorite-circle {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background-color: transparent;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.team-favorite-circle:hover {
+  transform: scale(1.08);
+}
+
+.team-favorite-circle img {
+  width: 110%;
+  height: 110%;
+}
+
+.favorite-teams-div{
+    max-width: 300px;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.counts-div{
+  color: black;
+  display: flex;
+  column-gap: 25px;
+  align-content: center;
+  text-align: center;
+  position: absolute;
+  margin-top: -35px;
+  margin-left: 155px;
+}
+
+.posts-dashboard-div{
+  width: 100vw;
+  margin-top: 100px;
+  margin-left: 200px;
+  margin-bottom: 50px;
+}
+
+.posts-heading{
+  color: black;
+  font-size: 30px;
+}
+
+.posts-navbar{
+  display:flex;
+}
+
+.create-post-button{
+  width: 130px;
+  font-family: 'trebuchet ms', sans-serif;
+  font-size: 15px;
+  height: 35px;
+  margin-top: -7px;
+  margin-left: -35px;
+  background-color: #C54242;
+  border-color: transparent;
+  color: white;
+  font-weight: 1000;
+  cursor: pointer;
+}
+
+.posts-grid {
+  column-width: 320px;   /* desired min column width */
+  column-gap: 30px;
+}
+
+.posts-grid > * {
+  break-inside: avoid;
+  margin-bottom: 30px;
+}
+
+.avatar-buttons{
+  display: flex;
+}
+
+.avatar-favorites{
+  margin-left: 30px;
+  margin-top: -20px;
+}

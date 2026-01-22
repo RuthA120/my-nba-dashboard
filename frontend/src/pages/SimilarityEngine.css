@@ -1,0 +1,236 @@
+.engine-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto; 
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.engine-header {
+  text-align: center;
+  margin-bottom: 35px;
+  margin-top: 10px;
+}
+
+.engine-header h1 {
+  font-size: 3.2rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  margin-top: 25px;
+  color: #111;
+}
+
+.engine-header a {
+  margin-top: 0px;
+  color: #111;
+}
+
+.engine-header p {
+  color: #5d5a5a;
+  font-size: 1.1rem;
+  width: 1000px;
+}
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr 1fr;
+  gap: 100px;
+  margin-left: -110px;
+  margin-top: -40px;
+}
+
+.player-circle {
+  height: 320px;
+  width: 320px;
+  border-radius: 50%;
+  background-color: #e9e8e8;
+  border-color: black;
+  border-width: 6px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  align-items: center;
+}
+
+
+.player-circle:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 45px rgba(0,0,0,0.12);
+}
+
+.add-prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  opacity: 0.6;
+  font-family: 'trebuchet ms', sans-serif;
+  font-size: 1.5rem;
+}
+
+.add-prompt img { 
+    width: 170px; height: 170px; 
+}
+
+.compare-button {
+  height: 65px;
+  width: 150px;
+  border-radius: 50px;
+  margin-top: 60px;
+  border: none;
+  background: #000;
+  color: #fff;
+  font-weight: 900;
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+}
+
+.compare-button:hover { 
+    transform: scale(1.1); 
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #354CA1;
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;          
+  border-radius: 20px;
+  display: flex;            
+  flex-direction: column;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+}
+
+.modal-header h3 { 
+  margin-bottom: 15px; 
+  font-size: 2rem; 
+}
+
+.modal-header input {
+  width: 80%;
+  padding: 12px 15px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+}
+
+.modal-list {
+  flex: 1;                   
+  overflow-y: auto;
+}
+
+.list-item {
+  padding: 15px 25px;
+  cursor: pointer;
+  font-size: 1.3rem;
+  border-bottom: 1px solid #f9f9f9;
+}
+
+.list-item:hover { 
+  background: #f0f7ff; 
+  color: #007bff; 
+}
+
+.results-area { 
+  margin-top: -145px; 
+  text-align: center; 
+  margin-left: 2px;
+}
+
+.score-card {
+  background: #d5b32e;
+  padding: 20px 40px;
+  border-radius: 100px;
+  display: inline-flex;
+  flex-direction: column;
+  margin-left: 15px;
+  border-style: solid;
+  border-width: 4px;
+  gap: 5px;
+}
+
+.score-card .label { 
+  font-size: 1.4rem; 
+  text-transform: uppercase; 
+  color: #000000; 
+  letter-spacing: 1px; 
+  font-weight: 800;
+}
+.score-card .value { 
+  font-size: 2.3rem; 
+  font-weight: 800; 
+  color: #000000; 
+}
+.error-msg { color: #dc3545; font-weight: 600; }
+
+
+.similarity-player-image {
+  width: 370px;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 35px;
+  margin-top: 50px;
+}
+
+
+.name-display {
+  font-family: 'Trebuchet MS', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  width: 400px;
+}
+
+
+.player-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Shrink the player circle */
+.player-circle.small {
+  width: 200px;
+  height: 200px;
+  padding: 20px;
+  margin-top: -30px;;
+}
+
+/* Shrink player image */
+.similarity-player-image.small {
+  width: 230px;
+  margin-top: 310px;
+}
+
+/* Shrink player name */
+.name-display.small {
+  font-size: 1.5rem;
+  margin-top: -40px;
+}
+
+.compare-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 65px; /* match button height */
+}

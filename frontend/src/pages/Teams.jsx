@@ -4,25 +4,49 @@ import { fetchTeams } from "../api/teams";
 import TeamCard from "../components/TeamCard";
 import SearchBar from "../components/SearchBar";
 import NavBar from "../components/NavBar";
+import { useNavigate } from 'react-router-dom';
 import "./Teams.css";
 
 export default function Teams() {
-  const [teams, setTeams] = useState([]);
   const [query, setQuery] = useState("");
+  const [teams, setTeams] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchTeams().then(setTeams);
+    const fetchTeams = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/teams/", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.error || "Failed to load teams");
+        }
+
+        setTeams(data); 
+      } catch (err) {
+        if (err) {
+          navigate("/");
+        } 
+      }
+    };
+
+    fetchTeams();
   }, []);
 
-  const filtered = teams.filter(t =>
-    t.name.toLowerCase().includes(query.toLowerCase())
+
+  const filteredTeams = teams.filter(team =>
+    team.name.toLowerCase().includes(query.toLowerCase())
   );
+
 
   return (
     <div>
       <NavBar />
-
-
       <div
         style={{
           paddingTop: "7rem",
@@ -54,7 +78,7 @@ export default function Teams() {
             padding: "2rem 5rem"
           }}
         >
-          {filtered.map(team => (
+          {filteredTeams.map(team => (
             <TeamCard key={team.id} team={team} />
           ))}
         </div>

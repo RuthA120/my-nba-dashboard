@@ -1,0 +1,176 @@
+.team-profile-picture{
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-left: -10px;
+    margin-top: 65px;
+}
+
+.team-profile-image{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.team-info-div{
+    width: 680px;
+    height: 200px;
+    margin-left: -80px;
+}
+
+.team-season-select {
+  padding: 0.4rem 0.8rem;
+  font-size: 1rem;
+  border-radius: 20px;
+  margin-left: 600px;
+  position: absolute;
+  top: 130px;
+  cursor: pointer;
+  border-color: black;
+}
+
+.team-stats-grid {
+  display: grid;
+  width: 450px;
+  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+  column-gap: 35px;
+  row-gap: 10px;
+  padding-bottom: 20px;
+  margin-left: 250px;
+  margin-top: 25px;
+  align-items: center;
+}
+
+.stat-card {
+  width: 100%;
+  max-width: 180px;  
+}
+
+
+.team-stat-value {
+  font-size: 30px;
+  font-weight: 700;
+  color: black;
+  text-align: center;
+}
+
+.team-stat-label {
+  margin-top: 0rem;
+  font-size: 25px;
+  font-weight: 600;
+  color: #7E745F;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.search-buttons{
+    position: absolute;
+    right: 90px;
+    top: 120px;
+    display: grid;
+    row-gap: 15px;
+}
+
+.team-search-button{
+    color: white;
+    width: 200px;
+    height: 30px;
+    border-radius: 25px;
+    text-align: center;
+    padding-top: 10px;
+    background-color: #C54242;
+}
+
+.player-search-button{
+    color: white;
+    width: 200px;
+    height: 30px;
+    border-radius: 25px;
+    text-align: center;
+    padding-top: 10px;
+    background-color: #354CA1;
+}
+
+.team-favorite-status {
+  width: 145px;
+  height: 30px;
+  border-radius: 25px;
+  background-color: rgb(136, 195, 100);
+  margin-left: 580px;
+  margin-top: -140px;
+  margin-bottom: -10px;
+  color: black;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.team-favorite-status.favorited {
+  background-color: #d44d4d; 
+}
+
+.team-favorite-status:hover {
+  opacity: 0.9;
+}
+
+
+.favorite-star{
+  height: 20px;
+  width: 20px;
+  margin-top: 1px;
+  margin-left: 6px;
+}
+
+.favorited-text{
+  margin-top: 18px;
+  margin-left: 8px;
+  font-size: 20px;
+}
+
+.teams-record-div {
+  position: absolute;
+  margin-top: 106px;
+  margin-left: 45px;
+  font-size: 1.2rem;
+}
+
+.records-text {
+  color: black; 
+}
+
+.wins-text {
+  color: green;
+}
+
+.losses-text {
+  color: red;
+}
+
+.roster-box{
+    background-color: #354CA1;
+    min-height: 100vh;
+    position: relative;
+    margin-top: 20px;
+}
+
+.roster-text{
+    position: absolute;
+    top: 0px;
+    left: 30px;
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+}
+
+.roster-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 25px;
+  padding: 80px 40px;
+}

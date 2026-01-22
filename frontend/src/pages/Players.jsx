@@ -20,11 +20,9 @@ export default function Players() {
         const data = await fetchPlayers();
         setPlayers(data);
       } catch (err) {
-        if (err.status === 401) {
-          navigate("/", { replace: true });
-        } else {
-          console.error(err);
-        }
+        if (err) {
+          navigate("/");
+        } 
       }
     };
 
