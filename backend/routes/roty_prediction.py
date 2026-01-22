@@ -4,9 +4,12 @@ import jwt
 from datetime import datetime, timedelta
 from flask import jsonify, request
 from werkzeug.security import check_password_hash
+import os
+from dotenv import load_dotenv
+
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 roty_bp = Blueprint("roty", __name__)
-SECRET_KEY = "Lt2J]F6Go0£$"
 from functools import wraps
 
 def token_required(f):
@@ -14,7 +17,6 @@ def token_required(f):
     def decorated(*args, **kwargs):
         token = None
         auth_header = request.headers.get("Authorization")
-
         if auth_header and auth_header.startswith("Bearer "):
             token = auth_header.split(" ")[1]
 
@@ -30,15 +32,14 @@ def token_required(f):
             return jsonify({"error": "Invalid token"}), 401
 
         return f(*args, **kwargs)
-
     return decorated
+
 
 @roty_bp.route("/roty-model", methods=["GET"])
 @token_required
 def get_current_rookies():
     conn = get_db_connection()
     cur = conn.cursor()
-
     query = """
         SELECT
             p.id,
@@ -89,22 +90,19 @@ def get_current_rookies():
     ]
 
     import joblib
-    # Load the scaler and the trained Random Forest model
-    scaler = joblib.load("./model-files/scaler.pkl")
-    calibrated_model = joblib.load("./model-files/roty_model.pkl")  # if you calibrated
+    calibrated_model = joblib.load("./model-files/roty_model.pkl")  # if you calibrated        
 
     import pandas as pd
     features = ['MP', 'PTS', 'TRB', 'AST', 'STL', 'BLK', 'Pick Number']
     rookies_df = pd.DataFrame(rookies)  # rookies is the list of dicts from SQL
     print(rookies_df.columns)
     X_rookies = rookies_df[features]    # features = columns you used in training
-    X_scaled = scaler.transform(X_rookies)
 
-    probs = calibrated_model.predict_proba(X_scaled)[:, 1]  # probability of winning
+    probs = calibrated_model.predict_proba(X_rookies)[:, 1]  # probability of winning
     probs_normalized = probs / probs.sum()
     rookies_df["roty_prob"] = probs_normalized
 
-    top5 = rookies_df.sort_values("roty_prob", ascending=False).head(5)
+    top5 = rookies_df.sort_values("roty_prob", ascending=False).head(4)
 
     return jsonify(top5.to_dict(orient="records"))
 

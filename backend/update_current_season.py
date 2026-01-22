@@ -1,6 +1,18 @@
 from nba_api.stats.endpoints import leaguedashplayerstats
 import psycopg2
 import time
+import os
+from dotenv import load_dotenv
+
+POST_GRES_PASSWORD = os.getenv("POST_GRES_PASSWORD")
+
+conn = psycopg2.connect(
+    host="localhost",
+    database="nba-dashboard",
+    user="postgres",
+    password=POST_GRES_PASSWORD
+)
+cur = conn.cursor()
 
 # -----------------------------
 # CONFIG
@@ -8,16 +20,6 @@ import time
 CURRENT_SEASON = "2024-25"  # change each year
 SLEEP_SECONDS = 1
 
-# -----------------------------
-# DB Connection
-# -----------------------------
-conn = psycopg2.connect(
-    host="localhost",
-    database="nba-dashboard",
-    user="postgres",
-    password="*****"
-)
-cur = conn.cursor()
 
 print(f"Updating current season stats for {CURRENT_SEASON}...")
 

@@ -1,16 +1,20 @@
 from flask import Blueprint, request, jsonify
 from database import get_db_connection
 import psycopg2
-from psycopg2 import errors
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
 from datetime import datetime, timedelta
-from flask import jsonify, request
-from werkzeug.security import check_password_hash
+from functools import wraps
+
+import os
+from dotenv import load_dotenv
+
+import cloudinary
+import cloudinary.uploader
+
 
 auth_bp = Blueprint("auth", __name__)
-SECRET_KEY = "Lt2J]F6Go0£$"
-
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 from functools import wraps
 
@@ -136,3 +140,80 @@ def login():
         "token": token,
         "has_username": user[2] is not None
     })
+
+
+cloudinary.config(
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET"),
+    secure=True
+)
+
+
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
+
+def allowed_file(filename):
+    return (
+        "." in filename and
+        filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+    )
+
+
+@auth_bp.route("/upload-profile-picture", methods=["POST"])
+@token_required
+def upload_profile_picture():
+    if "image" not in request.files:
+        return jsonify({"error": "No image provided"}), 400
+
+    image = request.files["image"]
+
+    if not allowed_file(image.filename):
+        return jsonify({"error": "Invalid file type"}), 400
+
+    try:
+        upload_result = cloudinary.uploader.upload(
+            image,
+            folder="profile_pictures",
+            public_id=f"user_{request.user_id}",
+            overwrite=True
+        )
+
+        image_url = upload_result["secure_url"]
+
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute(
+            "UPDATE users SET profile_image_url = %s WHERE id = %s",
+            (image_url, request.user_id)
+        )
+        conn.commit()
+        cur.close()
+        conn.close()
+
+        return jsonify({"profile_image_url": image_url}), 200
+
+    except Exception as e:
+        print(e)
+        return jsonify({"error": "Upload failed"}), 500
+
+
+@auth_bp.route("/api/upload-post-image", methods=["POST"])
+@token_required
+def upload_post_image():
+    if "image" not in request.files:
+        return jsonify({"error": "No image provided"}), 400
+
+    file = request.files["image"]
+
+    try:
+        upload_result = cloudinary.uploader.upload(
+            file,
+            folder="nba_dashboard/posts"
+        )
+
+        return jsonify({
+            "image_url": upload_result["secure_url"]
+        }), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500

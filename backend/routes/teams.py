@@ -4,9 +4,12 @@ import jwt
 from datetime import datetime, timedelta
 from flask import jsonify, request
 from werkzeug.security import check_password_hash
+import os
+from dotenv import load_dotenv
 
+SECRET_KEY = os.getenv("SECRET_KEY")
 teams_bp = Blueprint("teams", __name__)
-SECRET_KEY = "Lt2J]F6Go0£$"
+
 from functools import wraps
 
 def token_required(f):
@@ -55,9 +58,9 @@ def get_teams():
     ])
 
 
-@teams_bp.route("/<string:team_name>", methods=["GET"])
+@teams_bp.route("/<int:team_id>", methods=["GET"])
 @token_required
-def get_team(team_name):
+def get_team(team_id):
     conn = get_db_connection()
     cur = conn.cursor()
 
@@ -70,9 +73,9 @@ def get_team(team_name):
         FROM teams t
         LEFT JOIN team_stats ts
         ON t.full_name = ts.team_name
-        WHERE t.full_name = %s
+        WHERE t.id = %s
         ORDER BY ts.season DESC;
-    """, (team_name,))
+    """, (team_id,))
 
     rows = cur.fetchall()
     cur.close()
@@ -103,3 +106,114 @@ def get_team(team_name):
             for r in rows if r[3]
         ]
     })
+
+@teams_bp.route("/is-favorite/<int:team_id>", methods=["GET"])
+@token_required
+def is_favorite_team(team_id):
+    conn = get_db_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute(
+            """
+            SELECT 1 FROM user_favorites
+            WHERE user_id = %s AND entity_id = %s AND entity_type = 'team'
+            """,
+            (request.user_id, team_id)
+        )
+        favorited = cur.fetchone() is not None
+    finally:
+        cur.close()
+        conn.close()
+
+    return jsonify({"isFavorited": favorited}), 200
+
+
+@teams_bp.route("/favorite-team", methods=["POST"])
+@token_required
+def set_favorite_player():
+    team_id = request.json.get("teamId")  # or request.form.get("playerId")
+    if not team_id:
+        return jsonify({"error": "Missing teamId"}), 400
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute(
+            """
+            INSERT INTO user_favorites (user_id, entity_type, entity_id)
+            VALUES (%s, 'team', %s)
+            ON CONFLICT DO NOTHING
+            """,
+            (request.user_id, team_id)
+        )
+        conn.commit()
+    finally:
+        cur.close()
+        conn.close()
+
+    return jsonify({"message": "Team favorited"}), 200
+
+
+@teams_bp.route("/remove-favorite-team", methods=["DELETE"])
+@token_required
+def remove_favorite_team():
+    team_id = request.json.get("teamId")  
+    if not team_id:
+        return jsonify({"error": "Missing teamId"}), 400
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute(
+            """
+            DELETE FROM user_favorites 
+            WHERE user_id = %s 
+            AND entity_id = %s
+            """,
+            (request.user_id, team_id)
+        )
+        conn.commit()
+    finally:
+        cur.close()
+        conn.close()
+
+    return jsonify({"message": "Team unfavorited"}), 200
+
+
+@teams_bp.route("/<int:team_id>/roster", methods=["GET"])
+@token_required
+def get_team_roster(team_id):
+    season = request.args.get("season")
+
+    if not season:
+        return jsonify({"error": "Season is required"}), 400
+
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+
+        cur.execute(
+            """
+            SELECT p.id, p.full_name
+            FROM player_stats ps
+            JOIN players p ON ps.player_id = p.id
+            WHERE ps.team_id = %s
+              AND ps.season = %s
+              ORDER BY p.last_name ASC
+            """,
+            (team_id, season)
+        )
+
+        players = cur.fetchall()
+
+        cur.close()
+        conn.close()
+
+        return jsonify([
+            {"id": p[0], "full_name": p[1]}
+            for p in players
+        ])
+
+    except Exception as e:
+        print(e)
+        return jsonify({"error": "Failed to fetch roster"}), 500

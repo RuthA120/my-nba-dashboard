@@ -4,8 +4,12 @@ import jwt
 from datetime import datetime, timedelta
 from flask import jsonify, request
 from werkzeug.security import check_password_hash
-SECRET_KEY = "Lt2J]F6Go0£$"
+
 from functools import wraps
+import os
+from dotenv import load_dotenv
+
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 def token_required(f):
     @wraps(f)

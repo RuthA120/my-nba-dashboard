@@ -2,14 +2,16 @@ from nba_api.stats.endpoints import leaguedashteamstats
 import psycopg2
 import time
 
-# -----------------------------
-# Database Connection
-# -----------------------------
+import os
+from dotenv import load_dotenv
+
+POST_GRES_PASSWORD = os.getenv("POST_GRES_PASSWORD")
+
 conn = psycopg2.connect(
     host="localhost",
     database="nba-dashboard",
     user="postgres",
-    password="Afrokween04*"
+    password=POST_GRES_PASSWORD
 )
 cur = conn.cursor()
 

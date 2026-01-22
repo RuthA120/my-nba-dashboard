@@ -2,28 +2,24 @@ from nba_api.stats.endpoints import leaguedashplayerstats
 import psycopg2
 import time
 
-# -----------------------------
-# Database Connection
-# -----------------------------
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+POST_GRES_PASSWORD = os.getenv("POST_GRES_PASSWORD")
+
 conn = psycopg2.connect(
     host="localhost",
     database="nba-dashboard",
     user="postgres",
-    password="Afrokween04*"
+    password=POST_GRES_PASSWORD
 )
 cur = conn.cursor()
 
-# -----------------------------
-# Seasons to ingest
-# -----------------------------
 seasons = [
-    "2014-15", "2015-16", "2016-17", "2017-18", "2018-19",
-    "2019-20", "2020-21", "2021-22", "2022-23", "2023-24", "2024-25", "2025-26"
+    "2025-26"
 ]
 
-# -----------------------------
-# Insert Queries
-# -----------------------------
 insert_player = """
 INSERT INTO players (id, full_name)
 VALUES (%s, %s)
@@ -51,9 +47,6 @@ ON CONFLICT (player_id, season, team_name) DO UPDATE SET
     free_throw_pct = EXCLUDED.free_throw_pct;
 """
 
-# -----------------------------
-# Ingestion Loop
-# -----------------------------
 for season in seasons:
     print(f"Processing players for {season}...")
 
