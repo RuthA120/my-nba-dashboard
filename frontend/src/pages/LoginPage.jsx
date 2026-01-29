@@ -29,7 +29,7 @@ export default function Login() {
             navigate("/username-creation");
           } 
           else {
-            navigate("/players-search");
+            navigate("/nba-dashboard");
           }
         } 
         

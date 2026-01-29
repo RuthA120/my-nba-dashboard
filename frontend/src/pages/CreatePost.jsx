@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import DefaultImage from '../assets/default-pfp.png';
 import "./CreatePost.css";
 import NavBar from "../components/NavBar";
@@ -11,6 +12,7 @@ export default function CreatePost() {
   const [error, setError] = useState("");
   const [username, setUsername] = useState("");
   const [profileImage, setProfileImage] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -63,8 +65,9 @@ export default function CreatePost() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to create post");
 
-      alert("Post created successfully!");
+      
       setTitle(""); setContent(""); setImageFile(null); setImagePreview(null);
+      navigate("/my-dashboard");
     } catch (err) {
       console.error(err);
       setError(err.message);

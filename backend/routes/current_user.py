@@ -107,7 +107,7 @@ def get_favorites():
         ]
     }), 200
 
-
+# Get current user's stats (fixed)
 @current_user_bp.route("/users/me/stats", methods=["GET"])
 @token_required
 def get_user_stats():
@@ -126,7 +126,7 @@ def get_user_stats():
     cur.execute("""
         SELECT COUNT(*)
         FROM user_friends
-        WHERE following_id = %s;
+        WHERE user_id = %s;
     """, (request.user_id,))
     following_count = cur.fetchone()[0]
 
@@ -146,5 +146,92 @@ def get_user_stats():
         "followers": followers_count,
         "following": following_count,
         "total_likes": total_likes
-    })
+    }), 200
 
+
+@current_user_bp.route("/users/<int:user_id>/follow", methods=["POST"])
+@token_required
+def follow_user(user_id):
+    if user_id == request.user_id:
+        return jsonify({"error": "Cannot follow yourself"}), 400
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    try:
+        cur.execute("""
+            INSERT INTO user_friends (user_id, following_id)
+            VALUES (%s, %s)
+            ON CONFLICT DO NOTHING
+        """, (request.user_id, user_id))
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        cur.close()
+        conn.close()
+        return jsonify({"error": str(e)}), 500
+
+    cur.close()
+    conn.close()
+    return jsonify({"message": f"Now following user {user_id}"}), 200
+
+
+@current_user_bp.route("/users/<int:user_id>/unfollow", methods=["POST"])
+@token_required
+def unfollow_user(user_id):
+    if user_id == request.user_id:
+        return jsonify({"error": "Cannot unfollow yourself"}), 400
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("""
+        DELETE FROM user_friends
+        WHERE user_id = %s AND following_id = %s
+    """, (request.user_id, user_id))
+    conn.commit()
+    cur.close()
+    conn.close()
+
+    return jsonify({"message": f"Unfollowed user {user_id}"}), 200
+
+
+@current_user_bp.route("/users/me/following", methods=["GET"])
+@token_required
+def get_following():
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT u.id, u.username, u.profile_image_url
+        FROM user_friends uf
+        JOIN users u ON uf.following_id = u.id
+        WHERE uf.user_id = %s
+    """, (request.user_id,))
+    following = cur.fetchall()
+    cur.close()
+    conn.close()
+
+    return jsonify([
+        {"id": u[0], "username": u[1], "profile_image_url": u[2]}
+        for u in following
+    ]), 200
+
+
+@current_user_bp.route("/users/me/followers", methods=["GET"])
+@token_required
+def get_followers():
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT u.id, u.username, u.profile_image_url
+        FROM user_friends uf
+        JOIN users u ON uf.user_id = u.id
+        WHERE uf.following_id = %s
+    """, (request.user_id,))
+    followers = cur.fetchall()
+    cur.close()
+    conn.close()
+
+    return jsonify([
+        {"id": u[0], "username": u[1], "profile_image_url": u[2]}
+        for u in followers
+    ]), 200

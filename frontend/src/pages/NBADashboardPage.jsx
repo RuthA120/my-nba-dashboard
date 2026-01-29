@@ -4,6 +4,7 @@ import DashboardPost from "../components/NBADashboardPost";
 import bballIMG from '../assets/b-ball.png';
 import AnalyticsIcon from '../assets/Analytics-Icon.png';
 import GroupsIcon from '../assets/Groups-Icon.png';
+import Loader from '../components/Loader';
 import MLIcon from '../assets/ML-Icon.png';
 import ProfileIcon from '../assets/Profile-Icon.png';
 import SearchIcon from '../assets/Side-search-icon.png';
@@ -16,38 +17,52 @@ export default function NBADashboardPage() {
   const [currentFeed, setCurrentFeed] = useState("explore");
   const [searchQuery, setSearchQuery] = useState(""); // search input
   const navigate = useNavigate();
+  const [loadingAll, setLoadingAll] = useState(true);
+  const [loadingFollowing, setLoadingFollowing] = useState(true);
+  const loading = currentFeed === "explore" ? loadingAll : loadingFollowing;
+
 
   useEffect(() => {
     const fetchAllPosts = async () => {
+      setLoadingAll(true);
       try {
         const res = await fetch("http://localhost:5000/posts/all-posts", {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
         const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "Failed to fetch posts");
+        if (!res.ok) throw new Error(data.error);
         setAllPosts(data);
       } catch (err) {
-        console.error("Failed to fetch all posts", err);
+        console.error(err);
+      } finally {
+        setLoadingAll(false);
       }
     };
+
     fetchAllPosts();
   }, []);
 
+
   useEffect(() => {
     const fetchFollowingPosts = async () => {
+      setLoadingFollowing(true);
       try {
         const res = await fetch("http://localhost:5000/posts/following-posts", {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
         const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "Failed to fetch following posts");
+        if (!res.ok) throw new Error(data.error);
         setFollowingPosts(data);
       } catch (err) {
-        console.error("Failed to fetch following posts", err);
+        console.error(err);
+      } finally {
+        setLoadingFollowing(false);
       }
     };
+
     fetchFollowingPosts();
   }, []);
+
 
   const postsToDisplay = currentFeed === "explore" ? allPosts : followingPosts;
 
@@ -99,7 +114,7 @@ export default function NBADashboardPage() {
             <img src={AnalyticsIcon} />
             Analytics
             <div className="sidebar-submenu">
-              <span onClick={() => navigate("/player-similarity")}>Player Similarity Engine</span>
+              <span onClick={() => navigate("/similarity-engine")}>Player Similarity Engine</span>
             </div>
           </li>
 
@@ -123,8 +138,9 @@ export default function NBADashboardPage() {
         </ul>
 
       </div>
+  
 
-      {/* Posts Feed */}
+
       <div className="dash-posts-feed">
         <div className="feed-buttons">
           <button
@@ -142,14 +158,19 @@ export default function NBADashboardPage() {
         </div>
 
         <div className="main-posts-grid">
-          {filteredPosts.length === 0 ? (
-            <p style={{ textAlign: "center", color: "#9ca3af" }}>
-              No posts found.
-            </p>
+          {loading ? (
+            <Loader />
+          ) : filteredPosts.length === 0 ? (
+            <p>No posts found.</p>
           ) : (
-            filteredPosts.map((post) => <DashboardPost key={post.id} post={post} />)
+            filteredPosts.map(post => (
+              <DashboardPost key={post.id} post={post} />
+            ))
           )}
         </div>
+
+
+        
       </div>
 
       <div className="updates-search-div">
@@ -167,13 +188,13 @@ export default function NBADashboardPage() {
           <h2 className="updates-title">Site Updates</h2>
           <ul className="updates-list">
             <li className="update-item">
-              🚀 New feature launched! Explore player similarity scores and compare advanced stats across seasons.
+              Discover how players compare in playing style with the NBA Player Similarity Engine!
             </li>
             <li className="update-item">
-              🏀 MVP Predictor model improved using historical voting data and advanced metrics.
+              Explore the ROTY Predictor model to see which rookies are leading the race for the ROTY title!
             </li>
             <li className="update-item">
-              📊 Analytics dashboard redesigned for faster insights and cleaner navigation.
+              Favorite specific players and teams, and have them displayed on your dashboard for others to see!
             </li>
           </ul>
         </div>

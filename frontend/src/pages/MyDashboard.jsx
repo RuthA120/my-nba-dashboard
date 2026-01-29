@@ -15,6 +15,7 @@ export default function MyDashboard(){
     const [followingCount, setFollowingCount] = useState();
     const [likesCount, setLikesCount] = useState();
     const [myPosts, setMyPosts] = useState([]);
+    const [isFollowing, setIsFollowing] = useState(false);
 
     useEffect(() => {
         const fetchMyPosts = async () => {
@@ -130,6 +131,26 @@ export default function MyDashboard(){
     fetchUser();
     }, []);
 
+    const handleFollowToggle = async () => {
+        try {
+            const endpoint = isFollowing
+                ? `http://localhost:5000/api/users/${userId}/unfollow`
+                : `http://localhost:5000/api/users/${userId}/follow`;
+
+            const res = await fetch(endpoint, {
+                method: "POST",
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error);
+
+            setIsFollowing(!isFollowing); 
+            fetchUserStats(); 
+        } catch (err) {
+            console.error("Failed to toggle follow", err);
+        }
+    };
 
 
     return (
@@ -144,7 +165,9 @@ export default function MyDashboard(){
                     />
                     <h1 className="avatar-username">{username}</h1>
                     <div className="avatar-buttons">
-                        <button className="follow-button">Follow</button>
+                        <button className="follow-button" onClick={handleFollowToggle}>
+                            {isFollowing ? "Unfollow" : "Follow"}
+                        </button>
                         <button className="request-button">Group Request</button>
                     </div>
                     <div className="counts-div">

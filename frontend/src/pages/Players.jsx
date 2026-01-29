@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchPlayers } from "../api/players";
 import PlayerCard from "../components/PlayerCard";
@@ -11,8 +11,26 @@ export default function Players() {
   const [players, setPlayers] = useState([]);
   const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const playersPerPage = 21;
+  const gridRef = useRef(null);
+  const ROWS = 5;
+  const [columns, setColumns] = useState(1);
+  const playersPerPage = columns * ROWS;
+  
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!gridRef.current) return;
+
+    const observer = new ResizeObserver(entries => {
+      const width = entries[0].contentRect.width;
+      const cols = Math.floor(width / 220);
+      setColumns(Math.max(cols, 1));
+    });
+
+    observer.observe(gridRef.current);
+    return () => observer.disconnect();
+  }, []);
+
 
   useEffect(() => {
     const loadPlayers = async () => {
@@ -58,27 +76,41 @@ export default function Players() {
                 TEAM SEARCH
             </div>
         </Link>
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-          rowGap: "0.5rem",
-          columnGap: "0.5rem",
-          padding: "2rem 5rem"
-        }}>
+        <div
+          ref={gridRef}
+          className="players-grid"
+        >
           {currentPlayers.map(player => (
             <PlayerCard key={player.id} player={player} />
           ))}
         </div>
 
-        <div style={{ textAlign: "center", marginTop: "5rem" }}>
-          <button onClick={() => setCurrentPage(p => Math.max(p - 1, 1))} disabled={currentPage === 1}>
-            Previous
-          </button>
-          <span style={{ margin: "0 1rem" }}>{currentPage} / {totalPages}</span>
-          <button onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages}>
-            Next
-          </button>
+        <div className="page-indicator">
+            {currentPage} / {totalPages}
         </div>
+        
+        <div className="pagination">
+          
+          <div className="page-control-left">
+            <button
+              onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
+              disabled={currentPage === 1}
+            >
+              ‹
+            </button>
+          </div>
+
+
+          <div className="page-control-right">
+            <button
+              onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
+              disabled={currentPage === totalPages}
+            >
+              ›
+            </button>
+          </div>
+        </div>
+
       </div>
     </div>
   );

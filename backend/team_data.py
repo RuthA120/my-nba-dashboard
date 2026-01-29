@@ -3,7 +3,7 @@ import psycopg2
 
 import os
 from dotenv import load_dotenv
-
+load_dotenv() 
 POST_GRES_PASSWORD = os.getenv("POST_GRES_PASSWORD")
 
 conn = psycopg2.connect(

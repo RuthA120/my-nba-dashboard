@@ -14,9 +14,15 @@ This project highlights my end-to-end capabilities in designing and engineering 
 
 ### 👥 User Experience / Social Networking
 - Full account creation and login/logout system
-- Personalized user dashboard
-- Post creation
+![](./frontend/src/readme_assets/Login_Register_GIF.gif)
+
+- Personalized user dashboard and post creation
+![](./frontend/src/readme_assets/Post_Creation.gif)
+
 - Player and team profile pages
+![](./frontend/src/readme_assets/Post_Creation.gif)
+
+#### More features...
 - Friend system: add/remove friends
 - Group system: create and join interest groups
 - Favorite players and teams for quick access
@@ -27,6 +33,8 @@ This project highlights my end-to-end capabilities in designing and engineering 
 
 #### ROTY Prediction Model
 - Developed a Python Random Forest model to predict NBA Rookie of the Year probabilities, tracking current rookies' live chances with 72% accuracy using historical performance data.
+![](./frontend/src/readme_assets/Roty_Model_Gif.gif)
 
 #### Player Similarity Engine
 - Users can explore players who are statistically similar to a selected player based on performance metrics using cosine similarity.
+![](./frontend/src/readme_assets/Similarity_Model_Gif.gif)

@@ -5,6 +5,7 @@ import BasketballGif from '../assets/basketball-loading.gif';
 
 export default function HomePage() {
   const navigate = useNavigate();
+  
 
   return (
     <div className="home-box">

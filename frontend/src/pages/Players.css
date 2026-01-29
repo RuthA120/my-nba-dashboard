@@ -41,3 +41,56 @@ body{
   right: 350px;
   z-index: 10; /* behind, but clickable */
 }
+
+.players-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.75rem;
+  padding: 2rem 5rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.pagination button {
+  background: transparent;
+  border: none;
+  font-size: 2.5rem;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  transform: scale(1.15);
+}
+
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.pagination span {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.page-indicator{
+  margin-left: 710px;
+  margin-top: 20px;
+  position: relative;
+}
+
+
+.page-control-left{
+  margin-left: -80px;
+  margin-top: -70px;
+}
+.page-control-right{
+  margin-left: 20px;
+  margin-top: -73px;
+}

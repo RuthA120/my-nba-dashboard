@@ -7,6 +7,7 @@ import NavBar from "../components/NavBar";
 export default function PostDetail() {
   const { postId } = useParams();
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   const [post, setPost] = useState(null);
   const [liked, setLiked] = useState(false);
@@ -19,7 +20,6 @@ export default function PostDetail() {
 
     const fetchData = async () => {
       try {
-        // Fetch post and comments in parallel
         const [postRes, commentsRes, userRes] = await Promise.all([
           fetch(`http://localhost:5000/posts/${postId}`),
           fetch(`http://localhost:5000/posts/${postId}/comments`),
@@ -117,6 +117,14 @@ export default function PostDetail() {
     }
   };
 
+  const handleUsernameClick = () => {
+    if (currentUserId === post.user_id) {
+      navigate("/my-dashboard");
+    } else {
+      navigate(`/user-profile/${post.user_id}`);
+    }
+  };
+
   if (!post) return <p>Loading...</p>;
 
   return (
@@ -129,7 +137,12 @@ export default function PostDetail() {
             alt="Profile"
             className="post-detail-avatar"
           />
-          <span className="post-detail-username">@{post.username}</span>
+          <span
+            className="post-detail-username"
+            onClick={handleUsernameClick}
+          >
+            @{post.username}
+          </span>
         </div>
         <h2 className="post-detail-title">{post.title}</h2>
         <p className="post-detail-content">{post.content}</p>

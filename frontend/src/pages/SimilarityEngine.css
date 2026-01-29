@@ -37,7 +37,7 @@
 
 .comparison-grid {
   display: grid;
-  grid-template-columns: 1fr 1.3fr 1fr;
+  grid-template-columns: 1fr 1.4fr 1fr;
   gap: 100px;
   margin-left: -110px;
   margin-top: -40px;
@@ -72,7 +72,7 @@
   gap: 15px;
   opacity: 0.6;
   font-family: 'trebuchet ms', sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 .add-prompt img { 
@@ -191,7 +191,6 @@
   margin-top: 50px;
 }
 
-
 .name-display {
   font-family: 'Trebuchet MS', sans-serif;
   font-size: 2rem;
@@ -216,21 +215,64 @@
   margin-top: -30px;;
 }
 
-/* Shrink player image */
 .similarity-player-image.small {
   width: 230px;
   margin-top: 310px;
 }
 
-/* Shrink player name */
 .name-display.small {
   font-size: 1.5rem;
-  margin-top: -40px;
+  margin-top: -10px;
 }
 
-.compare-slot {
-  display: flex;
+.player-circle {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #f0f0f0, #dcdcdc);
+  border: 5px solid #111;
+  padding: 24px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+
+.player-stats {
+  margin-top: 18px;
+  padding: 14px 10px;
+  width: 300px;
+  background: linear-gradient(180deg, #354CA1, #2c3f8f);
+  border-radius: 16px;
+  font-size: 10px;
+  color: white;
+}
+
+.stat-row {
+  display: grid;
+  grid-template-columns: 70px 1fr 35px;
   align-items: center;
-  justify-content: center;
-  min-height: 65px; /* match button height */
+  gap: 8px;
+  margin: 8px 0;
+}
+
+.stat-bar {
+  height: 7px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.stat-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f4c430, #ffd966);
+  transition: width 0.5s ease;
+}
+
+.stat-label{
+  font-size: 10px;
+}
+
+.stat-value {
+  text-align: right;
+  font-weight: 700;
+  font-size: 12px;
 }

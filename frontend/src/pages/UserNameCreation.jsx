@@ -58,7 +58,7 @@ export default function UserNameCreation() {
           if (!res.ok) throw new Error(data.error || "Username creation failed");
           
           setShowWelcome(true);
-          setTimeout(() => navigate('/players-search'), 3000);
+          setTimeout(() => navigate('/nba-dashboard'), 3000);
         } 
         
         catch (err) {

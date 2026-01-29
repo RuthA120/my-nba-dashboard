@@ -6,7 +6,7 @@ import { fetchPlayers } from "../api/players";
 import PlusSignImage from "../assets/plus-sign-img.png";
 import GitHubLogo from "../assets/github-logo.webp";
 import { RadarChart } from '@mui/x-charts/RadarChart';
-
+import Loader from '../components/Loader.jsx';
 
 
 export default function SimilarityEngine() {
@@ -19,6 +19,7 @@ export default function SimilarityEngine() {
   const [similarity, setSimilarity] = useState(null);
   const [error, setError] = useState("");
   const [compareClicked, setCompareClicked] = useState(false);
+  const [loading, setLoading] = useState(true);
   const radarMetrics = [
     "Points",
     "Rebounds",
@@ -30,6 +31,56 @@ export default function SimilarityEngine() {
     "Mid-FG\nAttempts",
     "Usage %"
   ];
+  
+  const maxValues = {
+      points: 33.4,
+      rebounds: 12.3,
+      assists: 11,
+      steals: 2.5,
+      blocks: 2.7,
+      threes_attempted: 11.9,
+      paint_pts_attempted: 13.9,
+      mid_fg_attempted: 6.5,
+      usage_pct: .37,
+  };
+
+  const getPercent = (value, key) => {
+    const max = maxValues[key] || 1;
+    return `${Math.min((value / max) * 100, 100)}%`;
+  };
+
+  function StatBars({ stats, getPercent }) {
+    const statConfig = [
+      ["Points", "points"],
+      ["Rebounds", "rebounds"],
+      ["Assists", "assists"],
+      ["Steals", "steals"],
+      ["Blocks", "blocks"],
+      ["3PT Att", "threes_attempted"],
+      ["Paint Att", "paint_pts_attempted"],
+      ["Mid FG Att", "mid_fg_attempted"],
+      ["Usage %", "usage_pct"],
+    ];
+
+    return (
+      <div className="player-stats">
+        {statConfig.map(([label, key]) => (
+          <div className="stat-row" key={key}>
+            <span className="stat-label">{label}</span>
+
+            <div className="stat-bar">
+              <div
+                className="stat-fill"
+                style={{ width: getPercent(stats[key], key) }}
+              />
+            </div>
+
+            <span className="stat-value">{stats[key]}</span>
+          </div>
+        ))}
+      </div>
+    );
+  }
 
 
   const navigate = useNavigate();
@@ -44,6 +95,7 @@ export default function SimilarityEngine() {
 
   useEffect(() => {
     const loadPlayers = async () => {
+      setLoading(true); // start loader
       try {
         const token = localStorage.getItem("token");
         const res = await fetch(
@@ -52,13 +104,16 @@ export default function SimilarityEngine() {
         );
         const data = await res.json();
         setPlayers(data);
-      } 
-      catch {
+      } catch {
         setError("Connection error");
+      } finally {
+        setLoading(false); 
       }
     };
+
     loadPlayers();
   }, [navigate]);
+
 
   const filteredPlayers = players.filter((p) =>
     p?.name?.toLowerCase().includes(query.toLowerCase())
@@ -175,7 +230,10 @@ export default function SimilarityEngine() {
         </header>
 
         <section className="comparison-grid">
-          {/* PLAYER 1 */}
+          {loading ? (
+            <Loader /> 
+          ) : (
+            <>
           <div className="player-slot left">
             <button className={`player-circle ${playerStats[player1?.id] ? "small" : ""}`} onClick={() => setActiveSearch("player1")}>
               {player1 ? (
@@ -190,19 +248,11 @@ export default function SimilarityEngine() {
                     {player1.name} (2026)
                   </span>
 
-                  {/* --- PLAYER 1 STATS --- */}
                   {playerStats[player1.id] && (
-                    <div className="player-stats">
-                      <p>Points: {playerStats[player1.id].points}</p>
-                      <p>Rebounds: {playerStats[player1.id].rebounds}</p>
-                      <p>Assists: {playerStats[player1.id].assists}</p>
-                      <p>Steals: {playerStats[player1.id].steals}</p>
-                      <p>Blocks: {playerStats[player1.id].blocks}</p>
-                      <p>3PT Attempts: {playerStats[player1.id].threes_attempted}</p>
-                      <p>Paint Attempts: {playerStats[player1.id].paint_pts_attempted}</p>
-                      <p>Mid FG Attempts: {playerStats[player1.id].mid_fg_attempted}</p>
-                      <p>Usage %: {playerStats[player1.id].usage_pct}</p>
-                    </div>
+                    <StatBars
+                      stats={playerStats[player1.id]}
+                      getPercent={getPercent}
+                    />
                   )}
                 </div>
               ) : (
@@ -223,7 +273,6 @@ export default function SimilarityEngine() {
           </div>
 
 
-          {/* PLAYER 2 */}
           <div className="player-slot right">
             <button className={`player-circle ${playerStats[player2?.id] ? "small" : ""}`} onClick={() => setActiveSearch("player2")}>
               {player2 ? (
@@ -238,19 +287,11 @@ export default function SimilarityEngine() {
                     {player2.name} (2026)
                   </span>
 
-                  {/* --- PLAYER 2 STATS --- */}
                   {playerStats[player2.id] && (
-                    <div className="player-stats">
-                      <p>Points: {playerStats[player2.id].points}</p>
-                      <p>Rebounds: {playerStats[player2.id].rebounds}</p>
-                      <p>Assists: {playerStats[player2.id].assists}</p>
-                      <p>Steals: {playerStats[player2.id].steals}</p>
-                      <p>Blocks: {playerStats[player2.id].blocks}</p>
-                      <p>3PT Attempts: {playerStats[player2.id].threes_attempted}</p>
-                      <p>Paint Attempts: {playerStats[player2.id].paint_pts_attempted}</p>
-                      <p>Mid FG Attempts: {playerStats[player2.id].mid_fg_attempted}</p>
-                      <p>Usage %: {playerStats[player2.id].usage_pct}</p>
-                    </div>
+                    <StatBars
+                      stats={playerStats[player2.id]}
+                      getPercent={getPercent}
+                    />
                   )}
                 </div>
               ) : (
@@ -261,6 +302,8 @@ export default function SimilarityEngine() {
               )}
             </button>
           </div>
+          </>
+        )}
         </section>
 
         <section className="results-area">
@@ -274,10 +317,10 @@ export default function SimilarityEngine() {
 
           {(playerStats[player1?.id] || playerStats[player2?.id]) && (
             <RadarChart
-              height={400}
+              height={330}
               series={getRadarData()}
               sx={{ mt: 3 }}
-              width={380}
+              width={310}
               radar={{ metrics: radarMetrics }}
             />
           )}
